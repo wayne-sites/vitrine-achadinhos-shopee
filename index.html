@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101014">
+<title>Vitrine de Achadinhos</title>
+<style>
+:root{--bg:#0d0d12;--panel:#17171f;--panel2:#20202a;--text:#f7f7fb;--muted:#a5a5b4;--accent:#ff6b35;--line:#2b2b36}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% -10%,#3a1b28 0,transparent 38%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:26px 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0 28px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.04em;font-size:20px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#ff8b4a,#f23f73);display:grid;place-items:center;font-size:22px;box-shadow:0 8px 30px #f4515b44}
+.pill{font-size:12px;color:#ffd8c8;border:1px solid #713c35;background:#3a211f;padding:8px 12px;border-radius:999px}
+.hero{padding:36px 0 28px}.eyebrow{color:#ff9b73;text-transform:uppercase;font-size:11px;letter-spacing:.18em;font-weight:800}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-.055em;margin:12px 0 14px;max-width:720px}
+.hero p{color:var(--muted);font-size:16px;line-height:1.65;max-width:620px;margin:0}
+.tools{display:flex;gap:12px;margin:26px 0 22px;flex-wrap:wrap}.search{flex:1;min-width:220px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:white;font-size:14px;outline:none}.search:focus{border-color:#ff825b}
+.count{color:var(--muted);font-size:13px;align-self:center}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
+.card{background:linear-gradient(180deg,#1a1a23,#14141b);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:#70453d}
+.photo{height:220px;background:linear-gradient(135deg,#292936,#171720);display:grid;place-items:center;position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:contain;background:#fff;display:none}
+.photo img.ready{display:block}
+.placeholder{color:#858595;text-align:center;padding:20px;font-size:13px;line-height:1.5}
+.number{position:absolute;top:12px;left:12px;background:#101014dd;border:1px solid #ffffff22;border-radius:9px;padding:6px 9px;font-size:11px;color:#ddd}
+.info{padding:15px;display:flex;flex-direction:column;gap:10px;flex:1}
+.name{font-size:15px;font-weight:750;letter-spacing:-.02em}.desc{font-size:12px;color:var(--muted);line-height:1.5;min-height:34px}
+.buy{margin-top:auto;text-decoration:none;text-align:center;background:linear-gradient(100deg,#ff7a42,#f14d67);color:white;font-weight:850;font-size:12px;letter-spacing:.04em;padding:13px;border-radius:11px}
+.buy:hover{filter:brightness(1.08)}
+.note{margin-top:28px;border:1px solid var(--line);background:#15151d;border-radius:14px;padding:16px;color:var(--muted);font-size:12px;line-height:1.6}
+footer{margin-top:30px;color:#777786;font-size:11px;text-align:center}
+.hidden{display:none!important}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){.wrap{padding:16px 14px 40px}header{padding-bottom:14px}.pill{display:none}.hero{padding:25px 0 16px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.photo{height:170px}.info{padding:11px}.name{font-size:13px}.desc{font-size:11px}.buy{font-size:10px;padding:12px}}
+@media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.photo{height:145px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand"><div class="logo">✦</div><span>VITRINE DE ACHADINHOS</span></div><div class="pill">14 produtos selecionados</div></header>
+<section class="hero">
+<div class="eyebrow">Seleção especial</div>
+<h1>Encontre seu próximo achadinho.</h1>
+<p>Produtos selecionados em um só lugar. Veja as imagens, escolha o que gostou e acesse a oferta diretamente na Shopee.</p>
+</section>
+<div class="tools"><input id="search" class="search" type="search" placeholder="Buscar produto..." aria-label="Buscar produto"><div class="count" id="count">Carregando vitrine…</div></div>
+<main class="grid" id="grid"></main>
+<div class="note">Ao selecionar <b>COMPRAR NA SHOPEE</b>, você será direcionado ao anúncio original. Preços, estoque, frete e condições podem mudar e devem ser conferidos na Shopee.</div>
+<footer>Vitrine independente de divulgação. Shopee é uma marca de seus respectivos titulares.</footer>
+</div>
+<script>
+const links = ["https://s.shopee.com.br/50af8N1XTA", "https://s.shopee.com.br/70LjW94q0g", "https://s.shopee.com.br/2qWAYY5ofO", "https://s.shopee.com.br/906ntxohvA", "https://s.shopee.com.br/gRfynYjsx", "https://s.shopee.com.br/6q2JKJ6xPg", "https://s.shopee.com.br/5VWvjux54f", "https://s.shopee.com.br/4LKyLpQqUi", "https://s.shopee.com.br/AUvbhEjkdO", "https://s.shopee.com.br/1BNwa84s6L", "https://s.shopee.com.br/4VeOYJCpZz", "https://s.shopee.com.br/4VeOYP64oT", "https://s.shopee.com.br/1BzCBQOZA", "https://s.shopee.com.br/6q2JKqsk49"];
+const grid=document.getElementById('grid'), search=document.getElementById('search'), count=document.getElementById('count');
+const cards=[];
+links.forEach((url,i)=>{
+ const card=document.createElement('article');card.className='card';card.dataset.index=i;
+ card.innerHTML=`<div class="photo"><span class="number">PRODUTO ${String(i+1).padStart(2,'0')}</span><div class="placeholder">Buscando foto original do anúncio…</div><img alt="Foto do produto ${i+1}" loading="lazy"></div><div class="info"><div class="name">Produto ${String(i+1).padStart(2,'0')}</div><div class="desc">Confira detalhes, opções e disponibilidade no anúncio.</div><a class="buy" href="${url}" target="_blank" rel="noopener noreferrer">COMPRAR NA SHOPEE ↗</a></div>`;
+ grid.appendChild(card);cards.push(card);
+ const endpoint='https://api.microlink.io/?url='+encodeURIComponent(url)+'&meta=true';
+ fetch(endpoint).then(r=>r.ok?r.json():Promise.reject()).then(result=>{
+   const d=result.data||{}, img=d.image&&d.image.url;
+   if(d.title)card.querySelector('.name').textContent=d.title;
+   if(d.description)card.querySelector('.desc').textContent=d.description.slice(0,115);
+   if(img){const image=card.querySelector('img');image.onload=()=>{image.classList.add('ready');card.querySelector('.placeholder').style.display='none'};image.onerror=()=>{card.querySelector('.placeholder').textContent='Imagem indisponível nesta prévia';};image.src=img;}
+   else card.querySelector('.placeholder').textContent='A foto não foi liberada pela prévia. Abra o anúncio para visualizar.';
+ }).catch(()=>{card.querySelector('.placeholder').textContent='A Shopee bloqueou a prévia automática. Abra o anúncio para ver a foto original.';});
+});
+function filter(){const q=search.value.toLowerCase().trim();let visible=0;cards.forEach(c=>{const show=c.innerText.toLowerCase().includes(q);c.classList.toggle('hidden',!show);if(show)visible++});count.textContent=visible+' produto(s)';}
+search.addEventListener('input',filter);count.textContent=links.length+' produtos';
+</script>
+</body></html>
