@@ -1,22 +1,45 @@
 # Vitrine de Achadinhos Shopee
 
-Página estática responsiva para apresentar 14 links de produtos da Shopee.
+Catálogo estático responsivo conectado ao feed de afiliados da Shopee.
+
+## Conteúdo do catálogo
+
+- 100.000 produtos importados do CSV de feed fornecido.
+- Imagem principal, título e descrição resumida.
+- Preço atual, preço de referência e desconto informado pelo feed.
+- Categorias, avaliação do produto e da loja.
+- Link de redirecionamento de afiliado gerado no feed.
+- Pesquisa, filtro por categoria, ordenação e paginação de 24 itens.
+
+## Arquivos obrigatórios
+
+Mantenha os dois arquivos na raiz do repositório:
+
+- `index.html`
+- `products.json.gz`
+
+O arquivo compactado de catálogo tem aproximadamente 18 MB. Ele não contém o endereço/token privado de download do feed; contém apenas os dados de produto necessários para a vitrine.
 
 ## Executar localmente
 
-Abra o arquivo `index.html` no navegador. Não há dependências de build.
+O catálogo é carregado via `fetch`, portanto não abra o HTML diretamente com `file://`. Na pasta dos arquivos, execute:
 
-## Publicar
+```powershell
+python -m http.server 8000
+```
 
-O projeto pode ser publicado em GitHub Pages ou em serviços de hospedagem de sites estáticos.
+Depois abra http://localhost:8000.
 
-### GitHub Pages
-1. Abra **Settings → Pages** neste repositório.
-2. Em **Build and deployment**, selecione **Deploy from a branch**.
-3. Escolha a branch `main` e a pasta `/(root)`.
-4. Salve e aguarde a publicação.
+## Publicar com GitHub Pages
+
+1. Envie `products.json.gz` para a raiz deste repositório, na branch `main` (Add file → Upload files → Commit changes).
+2. Em **Settings → Pages**, selecione **Deploy from a branch**.
+3. Escolha a branch `main` e a pasta `/(root)`; salve.
+4. Aguarde a publicação do Pages e abra a URL indicada em Settings → Pages.
 
 ## Observações
-- A página tenta carregar título, descrição e imagem do anúncio via Microlink.
-- A Shopee pode bloquear a prévia automática; nesse caso, o botão continua levando ao anúncio original.
-- Preços, estoque, frete e condições devem ser conferidos diretamente na Shopee.
+
+- O navegador baixa e descompacta o catálogo gzip. Use uma versão atual do Chrome, Edge, Firefox ou Safari.
+- A interface renderiza 24 produtos por página, mas pesquisa e filtros consideram todo o catálogo.
+- Preços, disponibilidade, frete e condições podem mudar; confirme sempre no anúncio da Shopee.
+- Os links de compra são os campos de redirecionamento afiliado presentes no CSV recebido.
